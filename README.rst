@@ -118,6 +118,7 @@ The following configuration will add two fields to each scraped item:
 - and ``'spider'``, which will contain the spider name
 
 ::
+
     MAGIC_FIELDS = {
         "timestamp": "item scraped at $time",
         "spider": "$spider:name"
