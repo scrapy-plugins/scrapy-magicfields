@@ -90,14 +90,14 @@ Supported magic variables
 ``$response``
     Access to some response properties.
 
-``$response:url``
-    The url from where the item was extracted from.
+    ``$response:url``
+        The url from where the item was extracted from.
 
-``$response:status``
-    Response http status.
+    ``$response:status``
+        Response http status.
 
-``$response:headers``
-    Response http headers.
+    ``$response:headers``
+        Response http headers.
 
 ``$setting``
     Access the given Scrapy setting. It accepts one argument: the name of the setting.
