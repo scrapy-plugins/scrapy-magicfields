@@ -57,22 +57,17 @@ only the item number. The following example, similar to the previous one but wit
 MAGIC_FIELDS = {"sku": "$field:url,r'item_no=(\d+)'"}
 
 """
-import datetime
-import os
-import re
-import time
+
+import re, time, datetime, os
 
 from scrapy.exceptions import NotConfigured
 from scrapy.item import BaseItem
 
-
 def _time():
     return datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
 
-
 def _isotime():
     return datetime.datetime.utcnow().isoformat()
-
 
 _REGEXES = {}
 _REGEX_ERRORS = {}
@@ -83,7 +78,7 @@ def _extract_regex_group(regex, txt):
         try:
             compiled = re.compile(regex)
             _REGEXES[regex] = compiled
-        except Exception, e:
+        except Exception as e:
             errmessage = e.message
             _REGEX_ERRORS[regex] = errmessage
     if errmessage:
@@ -103,13 +98,12 @@ def _first_arg(args):
     if args:
         return args.pop(0)
 
-
 def _format(fmt, spider, response, item, fixed_values):
     out = fmt
     for m in _ENTITIES_RE.finditer(fmt):
         val = None
         entity, args, regex = m.groups()
-        args = filter(None, (args or ':')[1:].split(','))
+        args = list(filter(None, (args or ':')[1:].split(',')))
         if entity == "$jobid":
             val = os.environ.get('SCRAPY_JOB', '')
         elif entity == "$spider":
@@ -149,11 +143,10 @@ def _format(fmt, spider, response, item, fixed_values):
         if regex:
             try:
                 out = _extract_regex_group(regex, out)
-            except ValueError, e:
+            except ValueError as e:
                 spider.log("Error at '%s': %s" % (m.group(), e.message))
 
     return out
-
 
 class MagicFieldsMiddleware(object):
 
@@ -178,3 +171,4 @@ class MagicFieldsMiddleware(object):
                 for field, fmt in self.mfields.items():
                     _res.setdefault(field, _format(fmt, spider, response, _res, self.fixed_values))
             yield _res
+
