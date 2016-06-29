@@ -14,3 +14,14 @@ script: tox
 
 after_success:
   - codecov
+
+deploy:
+  provider: pypi
+  distributions: "sdist bdist_wheel"
+  user: redapple
+  password:
+    secure: Nmm5WFz/InbM5jjRzV9QQeuDJi5ezrePNBwu1YaEg6jVzCk2eZHLTatDFoLzSzfxMrRMGfRDZ7rtrLQl8wcHQUCqc5+p46X7tm2T3tG3YDDrQRLlwBVS7PFino2dqkcgBnG0HJU7sZYF4RVrBvIa/F51/1UxSRfNT8tEYKO3zhFXAH6TN9CxW7u7+2+Qgfr2Q8T40P1Rqu1xMy+AkLdaPTl1OpG5VwAASGiLlW10eJ+6WMhMqhnGuvrNADeqgit0kQ4/euNHBqP8/LNW9EKPexurcW7uRtxLmesHdo5jO5h0Tix5ULhnarq7np6Tp46du9HOediDqi2Un+99wJzfE685yTnc/gCKFHa+km72ZKFtusaUdEu6qpJwgLCMpKBwL5UKI7DQNyysbHQ6WKMGCUbt5OI8zvW3posoStyA5IjD1sd0kAIEqhHjiszPCpolp7izy3DLRaF9TGRZhRhY6qOQ8tM2J/v+0JYPuBm74qrMQ6cAftqMpiP/ruGqLI7ho33yw2lcma2pGCJiPC5Y6IvTA1tGGUe18rbJYddPCtMw/hj4BHY57Gbf3bBskkLwQ9TNprAeEZVNG2eTbBg64pEQCaBEVrVtrHvhExHnWB+d8BGN3IHspyfhh7t9ZqzQGZPGLOv42M2PqDvKAoV505wdnSOk8WEv15Q+Y0AW2tw=
+  on:
+    tags: true
+    repo: scrapy-plugins/scrapy-magicfields
+    condition: $TOXENV = py35
