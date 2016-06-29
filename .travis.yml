@@ -1,0 +1,16 @@
+language: python
+python: 3.5
+
+sudo: false
+
+env:
+  matrix:
+  - TOXENV=py27
+  - TOXENV=py35
+
+install: pip install -U tox codecov
+
+script: tox
+
+after_success:
+  - codecov
