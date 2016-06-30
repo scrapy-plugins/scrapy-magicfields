@@ -2,6 +2,12 @@ Changes
 =======
 
 
+1.1.0 (2016-06-30)
+------------------
+
+Add support for spiders returning dict items.
+
+
 1.0.0 (2016-06-29)
 ------------------
 
