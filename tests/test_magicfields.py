@@ -138,3 +138,10 @@ class MagicFieldsTest(TestCase):
             'sku': 'myitem',
         }
         self.assertEqual(result, expected)
+
+
+class MagicFieldsDictItemTest(MagicFieldsTest):
+
+    def setUp(self):
+        super(MagicFieldsDictItemTest, self).setUp()
+        self.item = {'nom': 'myitem', 'prix': "56.70 euros", "url": "http://www.example.com/product.html?item_no=345"}
