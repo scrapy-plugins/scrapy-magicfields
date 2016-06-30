@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='scrapy-magicfields',
-    version='1.0.0',
+    version='1.1.0',
     license='BSD',
     description='Scrapy middleware to add extra "magic" fields to items',
     author='Scrapinghub',
