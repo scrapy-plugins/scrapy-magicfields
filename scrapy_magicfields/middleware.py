@@ -1,7 +1,15 @@
-import re, time, datetime, os
+import datetime
+import logging
+import os
+import re
+import time
 
 from scrapy.exceptions import NotConfigured
 from scrapy.item import BaseItem
+
+
+logger = logging.getLogger(__name__)
+
 
 def _time():
     return datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
@@ -49,13 +57,13 @@ def _format(fmt, spider, response, item, fixed_values):
         elif entity == "$spider":
             attr = _first_arg(args)
             if not attr or not hasattr(spider, attr):
-                spider.log("Error at '%s': spider does not have attribute" % m.group())
+                logger.warning("Error at '%s': spider does not have attribute" % m.group())
             else:
                 val = str(getattr(spider, attr))
         elif entity == "$response":
             attr = _first_arg(args)
             if not attr or not hasattr(response, attr):
-                spider.log("Error at '%s': response does not have attribute" % m.group())
+                logger.warning("Error at '%s': response does not have attribute" % m.group())
             else:
                 val = str(getattr(response, attr))
         elif entity == "$field":
@@ -77,14 +85,14 @@ def _format(fmt, spider, response, item, fixed_values):
                 try:
                     val = str(function(*args))
                 except:
-                    spider.log("Error at '%s': invalid argument for function" % m.group())
+                    logger.warning("Error at '%s': invalid argument for function" % m.group())
         if val is not None:
             out = out.replace(m.group(), val, 1)
         if regex:
             try:
                 out = _extract_regex_group(regex, out)
             except ValueError as e:
-                spider.log("Error at '%s': %s" % (m.group(), e.message))
+                logger.warning("Error at '%s': %s" % (m.group(), e.message))
 
     return out
 
