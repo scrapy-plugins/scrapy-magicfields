@@ -3,6 +3,7 @@ import re, os
 from unittest import TestCase
 
 from scrapy.spiders import Spider
+from scrapy.utils.response import get_base_url
 from scrapy.utils.test import get_crawler
 from scrapy.item import DictItem, Field
 from scrapy.http import HtmlResponse
@@ -31,7 +32,7 @@ class MagicFieldsTest(TestCase):
             print(x)
 
         self.spider.log = _log
-        self.response = HtmlResponse(body=b"<html></html>", url="http://www.example.com/product/8798732")
+        self.response = HtmlResponse(body=b'<html><head><base href="http://www.example.com/"></head></html>', url="http://www.example.com/product/8798732")
         self.item = TestItem({'nom': 'myitem', 'prix': "56.70 euros", "url": "http://www.example.com/product.html?item_no=345"})
 
     def tearDown(self):
@@ -100,6 +101,10 @@ class MagicFieldsTest(TestCase):
     def test_response(self):
         formatted = _format("$response:url", self.spider, self.response, self.item, {})
         self.assertEqual(formatted, self.response.url)
+
+    def test_response_base_url(self):
+        formatted = _format("$response:base_url", self.spider, self.response, self.item, {})
+        self.assertEqual(formatted, get_base_url(self.response))
 
     def test_fields_copy(self):
         formatted = _format("$field:nom", self.spider, self.response, self.item, {})

@@ -93,6 +93,9 @@ Supported magic variables
     ``$response:url``
         The url from where the item was extracted from.
 
+    ``$response:base_url``
+        The base url of the response, joined with the response url
+
     ``$response:status``
         Response http status.
 

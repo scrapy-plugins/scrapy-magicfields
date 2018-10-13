@@ -6,6 +6,7 @@ import time
 
 from scrapy.exceptions import NotConfigured
 from scrapy.item import BaseItem
+from scrapy.utils.response import get_base_url
 
 
 logger = logging.getLogger(__name__)
@@ -62,7 +63,9 @@ def _format(fmt, spider, response, item, fixed_values):
                 val = str(getattr(spider, attr))
         elif entity == "$response":
             attr = _first_arg(args)
-            if not attr or not hasattr(response, attr):
+            if attr == "base_url":
+                val = get_base_url(response)
+            elif not attr or not hasattr(response, attr):
                 logger.warning("Error at '%s': response does not have attribute" % m.group())
             else:
                 val = str(getattr(response, attr))
