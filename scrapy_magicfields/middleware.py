@@ -5,7 +5,7 @@ import re
 import time
 
 from scrapy.exceptions import NotConfigured
-from scrapy.item import BaseItem
+from scrapy.item import Item
 
 
 logger = logging.getLogger(__name__)
@@ -115,8 +115,7 @@ class MagicFieldsMiddleware(object):
 
     def process_spider_output(self, response, result, spider):
         for _res in result:
-            if isinstance(_res, (BaseItem, dict)):
+            if isinstance(_res, (Item, dict)):
                 for field, fmt in self.mfields.items():
                     _res.setdefault(field, _format(fmt, spider, response, _res, self.fixed_values))
             yield _res
-
