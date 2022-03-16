@@ -4,8 +4,8 @@ from unittest import TestCase
 
 from scrapy.spiders import Spider
 from scrapy.utils.test import get_crawler
-from scrapy.item import DictItem, Field
 from scrapy.http import HtmlResponse
+from scrapy.item import Dict as DictItem, Field
 
 from scrapy_magicfields import MagicFieldsMiddleware
 from scrapy_magicfields.middleware import _format

@@ -5,7 +5,7 @@ import re
 import time
 
 from scrapy.exceptions import NotConfigured
-from scrapy.item import BaseItem
+from scrapy.item import Item as BaseItem
 
 
 logger = logging.getLogger(__name__)
